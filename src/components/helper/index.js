@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
-import { Animated } from 'react-native';
+import PropTypes from "prop-types";
+import React, { PureComponent } from "react";
+import { Animated, Text } from "react-native";
 
-import styles from './styles';
+import styles from "./styles";
 
 export default class Helper extends PureComponent {
   static propTypes = {
@@ -11,7 +11,8 @@ export default class Helper extends PureComponent {
 
     disabled: PropTypes.bool,
 
-    style: Animated.Text.propTypes.style,
+    // style: Animated.Text.propTypes.style,
+    style: Text.propTypes.style,
 
     baseColor: PropTypes.string,
     errorColor: PropTypes.string,
@@ -27,7 +28,7 @@ export default class Helper extends PureComponent {
     let opacity = focusAnimation.interpolate({
       inputRange: [-1, -0.5, 0],
       outputRange: [1, 0, 1],
-      extrapolate: 'clamp',
+      extrapolate: "clamp",
     });
 
     this.state = {
@@ -39,8 +40,7 @@ export default class Helper extends PureComponent {
   componentDidMount() {
     let { focusAnimation } = this.props;
 
-    this.listener = focusAnimation
-      .addListener(this.onAnimation.bind(this));
+    this.listener = focusAnimation.addListener(this.onAnimation.bind(this));
   }
 
   componentWillUnmount() {
@@ -63,18 +63,9 @@ export default class Helper extends PureComponent {
 
   render() {
     let { errored, opacity } = this.state;
-    let {
-      style,
-      title,
-      error,
-      disabled,
-      baseColor,
-      errorColor,
-    } = this.props;
+    let { style, title, error, disabled, baseColor, errorColor } = this.props;
 
-    let text = errored?
-      error:
-      title;
+    let text = errored ? error : title;
 
     if (null == text) {
       return null;
@@ -83,9 +74,7 @@ export default class Helper extends PureComponent {
     let textStyle = {
       opacity,
 
-      color: !disabled && errored?
-        errorColor:
-        baseColor,
+      color: !disabled && errored ? errorColor : baseColor,
     };
 
     return (
